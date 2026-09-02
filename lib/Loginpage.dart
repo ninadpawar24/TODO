@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo/Registerpage.dart';
 import 'package:todo/homepage.dart';
 
 class Loginpage extends StatefulWidget {
@@ -66,6 +67,16 @@ class _LoginpageState extends State<Loginpage> {
             ElevatedButton(
               onPressed: loginUser,
               child: Text('Login'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Navigate to the registration page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Registerpage()),
+                );
+              },
+              child: Text('Don\'t have an account? Register'),
             ),
           ],
         )
