@@ -48,8 +48,10 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
+      body: Column(
+        children: [
+          Center(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children:  [
             Text('Welcome to the Homepage!'),
@@ -77,9 +79,37 @@ class _HomepageState extends State<Homepage> {
             ElevatedButton(
               onPressed: addTask,
                child: Text('Add Task'),
-                ),
+            ),
           ],
         ),
+          ),
+          Expanded(
+          child: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection("tasks").snapshots(),
+            builder: (context, snapshot){
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return Center(
+                  child: CircularProgressIndicator());
+              }
+              if(!snapshot.hasData || snapshot.data!.docs.isEmpty){
+                return Center(
+                  child: Text("No tasks found."));
+              }
+              final tasks = snapshot.data!.docs;
+              return ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index){
+                  final task = tasks[index];
+                  return ListTile(
+                    title: Text(task['taskName']),
+                    subtitle: Text("${task['taskDate']} at ${task['taskTime']}"),
+                  );
+                },
+              );
+            }
+          ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         child: Padding(
@@ -89,8 +119,7 @@ class _HomepageState extends State<Homepage> {
             child: const Text("Logout"),
           ),
         ),
-      )
-      
+      ),
     );
   }
 }
