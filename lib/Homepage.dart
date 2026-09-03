@@ -103,6 +103,12 @@ class _HomepageState extends State<Homepage> {
                   return ListTile(
                     title: Text(task['taskName']),
                     subtitle: Text("${task['taskDate']} at ${task['taskTime']}"),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () async {
+                        await FirebaseFirestore.instance.collection("tasks").doc(task.id).delete();
+                      },
+                    ),
                   );
                 },
               );
