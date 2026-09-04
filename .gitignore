@@ -46,22 +46,3 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
-
-# Unwanted files 
-.dart_tool
-idea/
-build/
-android/
-iso/
-linux/
-macOS/
-test/
-web/
-windows/
-.flutter-plugins
-.analysis_options.yaml
-.firebase.json
-.firebase.json
-.pubspec.yaml
-
-
